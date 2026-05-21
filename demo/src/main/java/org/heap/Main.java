@@ -1,3 +1,14 @@
+/**
+ * Universidad del Valle de Guatemala
+ * Algoritmos y Estructuras de Datos
+ * Sección: 20
+ * @author: Jimena Vásquez
+ * @version: 1.0
+ * @date: 20/05/2026
+ * Descripción: Programa de Cola de Prioridad para Hospital
+ * El programa utiliza un heap para gestionar pacientes en una sala de emergencias.
+*/
+
 package org.heap;
 
 import java.io.File;
@@ -7,13 +18,14 @@ import java.util.Scanner;
 
 public class Main {
 
-    private static final String RUTA_PACIENTES = "demo/src/main/resources/pacientes.txt";
+    private static final String RUTA_PACIENTES = "src/main/resources/pacientes.txt";
+
 
     public static void main(String[] args) {
         VectorHeap<Paciente> heapPacientes = new VectorHeap<>();
         TXTReader reader = new TXTReader();
 
-        // 1) Cargar pacientes desde archivo
+        // Cargar pacientes desde archivo
         try {
             List<Paciente> pacientes = reader.leerPacientes(new File(RUTA_PACIENTES));
             for (Paciente p : pacientes) {
@@ -25,13 +37,13 @@ public class Main {
             System.out.println("El programa continuará con el heap vacío.");
         }
 
-        // 2) Menú interactivo
+        // Menú
         try (Scanner teclado = new Scanner(System.in)) {
             int opcion = 0;
             while (opcion != 4) {
                 System.out.println("\n===== EMERGENCIAS =====");
                 System.out.println("1. Insertar paciente");
-                System.out.println("2. Atender (eliminar) paciente con mayor prioridad");
+                System.out.println("2. Atender paciente con mayor prioridad");
                 System.out.println("3. Mostrar paciente con mayor prioridad");
                 System.out.println("4. Salir");
                 System.out.print("Elige una opción: ");
@@ -54,7 +66,11 @@ public class Main {
             }
         }
     }
-
+    /**
+     * Método para insertar un nuevo paciente en el heap. Solicita al usuario el nombre, síntoma/enfermedad y prioridad del paciente.
+     * @param teclado Scanner para leer la entrada del usuario
+     * @param heap Heap donde se almacenarán los pacientes
+     */
     private static void insertarPaciente(Scanner teclado, VectorHeap<Paciente> heap) {
         System.out.print("Nombre: ");
         String nombre = teclado.nextLine().trim();
@@ -81,7 +97,11 @@ public class Main {
         heap.insert(new Paciente(nombre, enfermedad, prioridad));
         System.out.println("Paciente insertado. Total en cola: " + heap.size());
     }
-
+    /**
+     * Método para atender (eliminar) el paciente con mayor prioridad del heap. Si el heap está vacío, se muestra un mensaje indicando que no hay pacientes para atender.
+     * @param heap Heap de pacientes del cual se eliminará el paciente con mayor prioridad
+     * @exception NoSuchElementException Si el heap está vacío al intentar eliminar un paciente
+     */
     private static void atenderPaciente(VectorHeap<Paciente> heap) {
         if (heap.isEmpty()) {
             System.out.println("No hay pacientes en el heap.");

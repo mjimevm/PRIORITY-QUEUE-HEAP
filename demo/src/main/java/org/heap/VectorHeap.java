@@ -5,11 +5,16 @@ import java.util.Vector;
 
 public class VectorHeap<E extends Comparable<E>> implements PriorityQueue<E> {
     private Vector<E> heap;
-
+    /**
+     * Constructor para inicializar el heap como un Vector vacío.
+     */
     public VectorHeap() {
         heap = new Vector<>();
     }
-
+    /**
+     * Método para insertar un nuevo elemento en el heap. El elemento se agrega al final del Vector y luego se ajusta la posición del nuevo elemento hacia arriba (heapify up) para mantener la propiedad de heap.
+     * @param item El elemento a insertar en el heap. Debe implementar la interfaz Comparable para poder comparar prioridades.
+     */
     @Override
     public void insert(E item) {
         heap.add(item);
@@ -24,7 +29,10 @@ public class VectorHeap<E extends Comparable<E>> implements PriorityQueue<E> {
             }
         }
     }
-
+    /**
+     * Método para eliminar y retornar el elemento con la mayor prioridad (el mínimo) del heap. El método reemplaza el elemento raíz con el último elemento del Vector, lo elimina y luego ajusta la posición del nuevo elemento raíz hacia abajo (heapify down) para mantener la propiedad de heap. Si el heap está vacío, se lanza una excepción NoSuchElementException.
+     * @return El elemento con la mayor prioridad (el mínimo) que fue eliminado del heap
+     */
     @Override
     public E removeMin() {
         if (heap.isEmpty()) throw new NoSuchElementException("Priority Queue is empty");
@@ -54,23 +62,36 @@ public class VectorHeap<E extends Comparable<E>> implements PriorityQueue<E> {
         }
         return minItem;
     }
-
+    /**
+     * Método para retornar el elemento con la mayor prioridad (el mínimo) del heap sin eliminarlo. Si el heap está vacío, se lanza una excepción NoSuchElementException.
+     * @return El elemento con la mayor prioridad (el mínimo) del heap sin eliminarlo
+     */
     @Override
     public E peekMin() {
         if (heap.isEmpty()) throw new NoSuchElementException("Priority Queue is empty");
         return heap.get(0);
     }
-
+    /**
+     * Método para verificar si el heap está vacío. Retorna true si el heap no contiene elementos, de lo contrario retorna false.
+     * @return true si el heap está vacío, false en caso contrario
+     */
     @Override
     public boolean isEmpty() {
         return heap.isEmpty();
     }
-
+    /**
+     * Método para retornar el número de elementos actualmente almacenados en el heap.
+     * @return El número de elementos en el heap
+     */
     @Override
     public int size() {
         return heap.size();
     }
-
+    /**
+     * Método para intercambiar dos elementos en el heap.
+     * @param i Índice del primer elemento
+     * @param j Índice del segundo elemento
+     */
     private void swap(int i, int j) {
         E temp = heap.get(i);
         heap.set(i, heap.get(j));
